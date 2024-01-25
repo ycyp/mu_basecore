@@ -56,10 +56,15 @@
   gEfiMmPeiMmramMemoryReserveGuid
   # gEfiStandaloneMmNonSecureBufferGuid # MU_CHANGE
   # gEfiMmCpuDriverEpDescriptorGuid # MU_CHANGE
+  # gEfiStandaloneMmNonSecureBufferGuid # MU_CHANGE
 
 # MU_CHANGE [BEGIN] - Remove ARM from this lib, since it requires too much from ArmPkg.
+# [Protocols.ARM, Protocols.AARCH64]
+#   gEdkiiPiMmCpuDriverEpProtocolGuid
+
 # [FeaturePcd.ARM, FeaturePcd.AARCH64]
 #   gArmTokenSpaceGuid.PcdFfaEnable
+
 #
 # [BuildOptions]
 #   GCC:*_*_AARCH64_CC_FLAGS = -fpie
