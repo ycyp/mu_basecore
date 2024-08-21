@@ -27,6 +27,12 @@
 #   Arm/SetPermissions.c
 # MU_CHANGE [END] - Remove ARM from this lib, since it requires too much from ArmPkg.
 
+[Sources.AARCH64]
+  Arm/ModuleEntryPoint64.S
+
+[Sources.ARM]
+  Arm/ModuleEntryPoint32.S
+
 [Sources.X64]
   X64/StandaloneMmCoreEntryPoint.c
 
@@ -68,8 +74,8 @@
 #   gEdkiiPiMmCpuDriverEpProtocolGuid
 #   gEfiMmCommunication2ProtocolGuid
 
-# [FeaturePcd.ARM, FeaturePcd.AARCH64]
-#   gArmTokenSpaceGuid.PcdFfaEnable
+# [FixedPcd.ARM, FixedPcd.AARCH64]
+#   gArmTokenSpaceGuid.PcdStMmStackSize
 
 #
 # [BuildOptions]
