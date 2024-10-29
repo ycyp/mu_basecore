@@ -12,7 +12,11 @@
 # https://www.python.org/dev/peps/pep-0440/#version-specifiers
 ##
 
+<<<<<<< HEAD
 edk2-pytool-library~=0.21.11 # MU_CHANGE
+=======
+edk2-pytool-library~=0.22.2 # MU_CHANGE
+>>>>>>> 04c1a47202 (pip: update edk2-pytool-library requirement from ~=0.21.12 to ~=0.22.2 (#1191))
 edk2-pytool-extensions~=0.27.12 # MU_CHANGE
 antlr4-python3-runtime==4.13.2
 lcov-cobertura==2.0.2
