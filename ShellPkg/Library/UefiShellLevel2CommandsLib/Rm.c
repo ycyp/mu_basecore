@@ -220,8 +220,7 @@ IsValidDeleteTarget (
   }
 
   TempLocation = StrStr (Node->FullName, L":");
-  if ((TempLocation == NULL) || (StrLen (TempLocation) <= 2)) {
-    // MU_CHANGE - CodeQL Change - unguardednullreturndereference
+  if (StrLen (TempLocation) <= 2) {
     //
     // Deleting the root directory is invalid.
     //
@@ -243,11 +242,7 @@ IsValidDeleteTarget (
   Pattern      = StrnCatGrow (&Pattern, &Size, L"\\", 0);
   Size         = 0;
   SearchString = StrnCatGrow (&SearchString, &Size, Node->FullName, 0);
-  // MU_CHANGE Start - CodeQL Change - unguardednullreturndereference
-  if (SearchString == NULL) {
-    RetVal = FALSE;
-  } else if (!EFI_ERROR (ShellIsDirectory (SearchString))) {
-    // MU_CHANGE End - CodeQL Change - unguardednullreturndereference
+  if (!EFI_ERROR (ShellIsDirectory (SearchString))) {
     SearchString = StrnCatGrow (&SearchString, &Size, L"\\", 0);
     SearchString = StrnCatGrow (&SearchString, &Size, L"*", 0);
   }

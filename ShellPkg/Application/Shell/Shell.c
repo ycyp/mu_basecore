@@ -576,13 +576,6 @@ UefiMain (
 
     Size       = 100;
     TempString = AllocateZeroPool (Size);
-    // MU_CHANGE Start - CodeQL Change - unguardednullreturndereference
-    if (TempString == NULL) {
-      ASSERT (TempString != NULL);
-      return EFI_OUT_OF_RESOURCES;
-    }
-
-    // MU_CHANGE End - CodeQL Change - unguardednullreturndereference
 
     UnicodeSPrint (TempString, Size, L"%d", PcdGet8 (PcdShellSupportLevel));
     Status = InternalEfiShellSetEnv (L"uefishellsupport", TempString, TRUE);
@@ -1333,8 +1326,7 @@ DoStartupScript (
     }
 
     Status = RunShellCommand (FileStringPath, &CalleeStatus);
-    if ((!EFI_ERROR (Status)) && (ShellInfoObject.ShellInitSettings.BitUnion.Bits.Exit == TRUE)) {
-      // MU_CHANGE - CodeQL Change - unguardednullreturndereference
+    if (ShellInfoObject.ShellInitSettings.BitUnion.Bits.Exit == TRUE) {
       ShellCommandRegisterExit (gEfiShellProtocol->BatchIsActive (), (UINT64)CalleeStatus);
     }
 
@@ -2617,18 +2609,11 @@ RunCommandOrFile (
         CommandWithPath = ShellFindFilePathEx (FirstParameter, mExecutableExtensions);
       }
 
-      // MU_CHANGE Start - CodeQL Change - unguardednullreturndereference
-      if (CommandWithPath == NULL) {
-        //
-        // This should be impossible now.
-        //
-        ASSERT (CommandWithPath != NULL);
-        ShellPrintHiiEx (-1, -1, NULL, STRING_TOKEN (STR_SHELL_NOT_FOUND), ShellInfoObject.HiiHandle, FirstParameter);
-        SetLastError (SHELL_NOT_FOUND);
-        return EFI_NOT_FOUND;
-      }
+      //
+      // This should be impossible now.
+      //
+      ASSERT (CommandWithPath != NULL);
 
-      // MU_CHANGE End - CodeQL Change - unguardednullreturndereference
       //
       // Make sure that path is not just a directory (or not found)
       //
@@ -3345,8 +3330,8 @@ FindFirstCharacter (
   IN CONST CHAR16  EscapeCharacter
   )
 {
-  UINTN  WalkChar; // MU_CHANGE - CodeQL Change - comparison-with-wider-type
-  UINTN  WalkStr;  // MU_CHANGE - CodeQL Change - comparison-with-wider-type
+  UINT32  WalkChar;
+  UINT32  WalkStr;
 
   for (WalkStr = 0; WalkStr < StrLen (String); WalkStr++) {
     if (String[WalkStr] == EscapeCharacter) {

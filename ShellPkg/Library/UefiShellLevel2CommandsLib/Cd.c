@@ -304,15 +304,7 @@ ShellCommandRunCd (
 
         if (!EFI_ERROR (Status)) {
           Param1Copy = PathCleanUpDirectories (Param1Copy);
-          // MU_CHANGE Start - CodeQL Change - unguardednullreturndereference
-          if (Param1Copy == NULL) {
-            Status      = EFI_NOT_FOUND;
-            ShellStatus = SHELL_INVALID_PARAMETER;
-          } else {
-            Status = ExtractDriveAndPath (Param1Copy, &Drive, &Path);
-          }
-
-          // MU_CHANGE End - CodeQL Change - unguardednullreturndereference
+          Status     = ExtractDriveAndPath (Param1Copy, &Drive, &Path);
         }
 
         if (!EFI_ERROR (Status) && (Drive != NULL) && (Path != NULL)) {

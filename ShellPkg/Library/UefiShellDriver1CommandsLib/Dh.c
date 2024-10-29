@@ -218,13 +218,7 @@ GetDriverName (
     return (EFI_NOT_FOUND);
   }
 
-  Lang = GetBestLanguageForDriver (CompName2->SupportedLanguages, Language, FALSE);
-  // MU_CHANGE Start - CodeQL Change - unguardednullreturndereference
-  if (Lang == NULL) {
-    return (EFI_NOT_FOUND);
-  }
-
-  // MU_CHANGE End - CodeQL Change - unguardednullreturndereference
+  Lang   = GetBestLanguageForDriver (CompName2->SupportedLanguages, Language, FALSE);
   Status = CompName2->GetDriverName (CompName2, Lang, &NameToReturn);
   FreePool (Lang);
 
@@ -1144,17 +1138,10 @@ ShellCommandRunDh (
       return (SHELL_INVALID_PARAMETER);
     }
 
-    // MU_CHANGE Start - CodeQL Change - unguardednullreturndereference
     if (ShellCommandLineGetFlag (Package, L"-l")) {
       Lang = ShellCommandLineGetValue (Package, L"-l");
       if (Lang != NULL) {
         Language = AllocateZeroPool (StrSize (Lang));
-        if (Language == NULL) {
-          ShellPrintHiiEx (-1, -1, NULL, STRING_TOKEN (STR_GEN_OUT_MEM), gShellDriver1HiiHandle, L"dh");
-          ShellCommandLineFreeVarList (Package);
-          return (SHELL_OUT_OF_RESOURCES);
-        }
-
         AsciiSPrint (Language, StrSize (Lang), "%S", Lang);
       } else {
         ASSERT (Language == NULL);
@@ -1164,16 +1151,9 @@ ShellCommandRunDh (
       }
     } else {
       Language = AllocateZeroPool (10);
-      if (Language == NULL) {
-        ShellPrintHiiEx (-1, -1, NULL, STRING_TOKEN (STR_GEN_OUT_MEM), gShellDriver1HiiHandle, L"dh");
-        ShellCommandLineFreeVarList (Package);
-        return (SHELL_OUT_OF_RESOURCES);
-      }
-
       AsciiSPrint (Language, 10, "en-us");
     }
 
-    // MU_CHANGE End - CodeQL Change - unguardednullreturndereference
     SfoFlag     = ShellCommandLineGetFlag (Package, L"-sfo");
     DriverFlag  = ShellCommandLineGetFlag (Package, L"-d");
     VerboseFlag = (BOOLEAN)(ShellCommandLineGetFlag (Package, L"-v") || ShellCommandLineGetFlag (Package, L"-verbose"));

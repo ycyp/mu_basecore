@@ -549,7 +549,6 @@ ManFileFindTitleSection (
                                 returned help text.
   @retval EFI_INVALID_PARAMETER HelpText is NULL.
   @retval EFI_INVALID_PARAMETER ManFileName is invalid.
-  @retval EFI_INVALID_PARAMETER Command is invalid. // MU_CHANGE - CodeQL change
   @retval EFI_NOT_FOUND         There is no help text available for Command.
 **/
 EFI_STATUS
@@ -601,14 +600,7 @@ ProcessManFile (
   TempString = ShellCommandGetCommandHelp (Command);
   if (TempString != NULL) {
     FileHandle = ConvertEfiFileProtocolToShellHandle (CreateFileInterfaceMem (TRUE), NULL);
-    // MU_CHANGE Start - CodeQL Change - unguardednullreturndereference
-    if (FileHandle == NULL) {
-      Status = EFI_OUT_OF_RESOURCES;
-      goto Done;
-    }
-
-    // MU_CHANGE End - CodeQL Change - unguardednullreturndereference
-    HelpSize = StrLen (TempString) * sizeof (CHAR16);
+    HelpSize   = StrLen (TempString) * sizeof (CHAR16);
     ShellWriteFile (FileHandle, &HelpSize, TempString);
     ShellSetFilePosition (FileHandle, 0);
     HelpSize  = 0;
@@ -632,20 +624,8 @@ ProcessManFile (
     Status = SearchPathForFile (TempString, &FileHandle);
     if (EFI_ERROR (Status)) {
       FileDevPath = FileDevicePath (NULL, TempString);
-      // MU_CHANGE Start - CodeQL Change - unguardednullreturndereference
-      if (FileDevPath == NULL) {
-        Status = EFI_OUT_OF_RESOURCES;
-        goto Done;
-      }
-
-      DevPath = AppendDevicePath (ShellInfoObject.ImageDevPath, FileDevPath);
-      if (DevPath == NULL) {
-        Status = EFI_OUT_OF_RESOURCES;
-        goto Done;
-      }
-
-      // MU_CHANGE End - CodeQL Change - unguardednullreturndereference
-      Status = InternalOpenFileDevicePath (DevPath, &FileHandle, EFI_FILE_MODE_READ, 0);
+      DevPath     = AppendDevicePath (ShellInfoObject.ImageDevPath, FileDevPath);
+      Status      = InternalOpenFileDevicePath (DevPath, &FileHandle, EFI_FILE_MODE_READ, 0);
       SHELL_FREE_NON_NULL (FileDevPath);
       SHELL_FREE_NON_NULL (DevPath);
     }
@@ -753,14 +733,7 @@ ProcessManFile (
       }
 
       FileHandle = ConvertEfiFileProtocolToShellHandle (CreateFileInterfaceMem (TRUE), NULL);
-      // MU_CHANGE Start - CodeQL Change - unguardednullreturndereference
-      if (FileHandle == NULL) {
-        Status = EFI_OUT_OF_RESOURCES;
-        goto Done;
-      }
-
-      // MU_CHANGE End - CodeQL Change - unguardednullreturndereference
-      HelpSize = StrLen (TempString) * sizeof (CHAR16);
+      HelpSize   = StrLen (TempString) * sizeof (CHAR16);
       ShellWriteFile (FileHandle, &HelpSize, TempString);
       ShellSetFilePosition (FileHandle, 0);
       HelpSize  = 0;

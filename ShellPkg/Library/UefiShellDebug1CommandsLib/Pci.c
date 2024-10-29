@@ -5759,7 +5759,7 @@ PrintInterpretedExtendedCompatibilityDynamicPowerAllocation (
   )
 {
   CONST PCI_EXPRESS_EXTENDED_CAPABILITIES_DYNAMIC_POWER_ALLOCATION  *Header;
-  UINT32                                                            LinkCount; // MU_CHANGE - CodeQL Change - comparison-with-wider-type
+  UINT8                                                             LinkCount;
 
   Header = (PCI_EXPRESS_EXTENDED_CAPABILITIES_DYNAMIC_POWER_ALLOCATION *)HeaderAddress;
 
