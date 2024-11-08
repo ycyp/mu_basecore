@@ -70,4 +70,5 @@
   MdePkg/Test/Mock/Library/GoogleTest/MockCpuLib/MockCpuLib.inf
   MdePkg/Test/Mock/Library/GoogleTest/MockPciSegmentLib/MockPciSegmentLib.inf
   MdePkg/Test/Mock/Library/GoogleTest/MockReportStatusCodeLib/MockReportStatusCodeLib.inf
+  MdePkg/Test/Mock/Library/GoogleTest/MockPostCodeLib/MockPostCodeLib.inf
   # MU_CHANGE [END]
